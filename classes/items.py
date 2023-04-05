@@ -8,13 +8,16 @@ class BaseItem(ABC):
         else:
             self.kwargs_parse(kwargs)
 
-    def is_valid(self) -> (bool, str):
-        return True, ''
-
     def args_parse(self, values):
         pass
 
     def kwargs_parse(self, dict_values):
+        pass
+
+    def is_valid_tuple(self, data_tuple):
+        pass
+
+    def is_valid_dict(self, data_dict):
         pass
 
 
@@ -26,21 +29,29 @@ class Type1BaseItem(BaseItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    def is_valid_tuple(self, data_tuple):
+        for line in data_tuple:
+            if not type(line) is str:
+                raise TypeError('This parameter should be string!')
+
+
+    def is_valid_dict(self, data_dict):
+        for key in data_dict:
+            if not type(data_dict[key]) is str:
+                raise TypeError('This parameter should be string!')
+
+
     def args_parse(self, values):
+        self.is_valid_tuple(values)
         self.use_name = values[0]
         self.full_name = values[1]
         self.short_name = values[2]
 
     def kwargs_parse(self, dict_values):
+        self.is_valid_dict(dict_values)
         self.use_name = dict_values.get('use_name')
         self.full_name = dict_values.get('full_name')
         self.short_name = dict_values.get('short_name')
-
-    def is_valid(self) -> (bool, str):
-        try:
-            pass
-        except:
-            pass
 
 
 records = ('eraser', 'EraserHandler', 'er')
