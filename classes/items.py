@@ -19,31 +19,33 @@ class BaseItem(ABC):
 
 
 class Type1BaseItem(BaseItem):
-    age: int
-    name: str
-    gender: str
-    key: bool
+    use_name: str
+    full_name: str
+    short_name: str
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def args_parse(self, values):
-        self.age = values[0]
-        self.name = values[1]
-        self.gender = values[2]
+        self.use_name = values[0]
+        self.full_name = values[1]
+        self.short_name = values[2]
 
     def kwargs_parse(self, dict_values):
-        self.age = dict_values.get('age')
-        self.name = dict_values.get('name')
-        self.gender = dict_values.get('gender')
+        self.use_name = dict_values.get('use_name')
+        self.full_name = dict_values.get('full_name')
+        self.short_name = dict_values.get('short_name')
 
     def is_valid(self) -> (bool, str):
-        pass
+        try:
+            pass
+        except:
+            pass
 
 
-records = (10, 'Paul', 'F')
-dict1 = {'age': 22, 'name': 'Denis', 'gender': 'M'}
+records = ('eraser', 'EraserHandler', 'er')
+dict1 = {'use_name': 'switch', 'full_name': 'SwitchHandler', 'short_name': 'sw'}
 s = Type1BaseItem(*records)
-a = Type1BaseItem(age=22, name='Denis', gender='M')
-print(s.age, s.name, s.gender)
-print(a.age, a.name, a.gender)
+a = Type1BaseItem(**dict1)
+print(s.use_name, s.full_name, s.short_name)
+print(a.use_name, a.full_name, a.short_name)
