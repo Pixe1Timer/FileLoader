@@ -3,7 +3,6 @@ import platform
 import typing
 from classes.misc_classes import FileDescriptor
 import os
-from uuid import uuid4
 import tempfile
 
 
