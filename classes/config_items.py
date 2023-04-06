@@ -1,4 +1,5 @@
 from abc import ABC
+import unittest
 
 
 class BaseItem(ABC):
@@ -34,12 +35,10 @@ class Type1BaseItem(BaseItem):
             if not type(line) is str:
                 raise TypeError('This parameter should be string!')
 
-
     def is_valid_dict(self, data_dict):
         for key in data_dict:
             if not type(data_dict[key]) is str:
                 raise TypeError('This parameter should be string!')
-
 
     def args_parse(self, values):
         self.is_valid_tuple(values)
@@ -54,9 +53,18 @@ class Type1BaseItem(BaseItem):
         self.short_name = dict_values.get('short_name')
 
 
+class Type1TestCase(unittest.TestCase):
+    def test_use_name(self):
+        self.assertEqual(s.use_name, 'eraser')
+
+    def test_full_name(self):
+        self.assertEqual(s.full_name, 'EraserHandler')
+
+    def test_short_name(self):
+        self.assertEqual(s.short_name, 'er')
+
+
 records = ('eraser', 'EraserHandler', 'er')
 dict1 = {'use_name': 'switch', 'full_name': 'SwitchHandler', 'short_name': 'sw'}
 s = Type1BaseItem(*records)
 a = Type1BaseItem(**dict1)
-print(s.use_name, s.full_name, s.short_name)
-print(a.use_name, a.full_name, a.short_name)
