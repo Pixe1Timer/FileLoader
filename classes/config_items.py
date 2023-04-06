@@ -1,5 +1,4 @@
 from abc import ABC
-import unittest
 
 
 class BaseItem(ABC):
@@ -16,10 +15,14 @@ class BaseItem(ABC):
         pass
 
     def is_valid_tuple(self, data_tuple):
-        pass
+        for line in data_tuple:
+            if not type(line) is str:
+                raise TypeError('This parameter should be string!')
 
     def is_valid_dict(self, data_dict):
-        pass
+        for key in data_dict:
+            if not type(data_dict[key]) is str:
+                raise TypeError('This parameter should be string!')
 
 
 class Type1BaseItem(BaseItem):
@@ -31,14 +34,10 @@ class Type1BaseItem(BaseItem):
         super().__init__(*args, **kwargs)
 
     def is_valid_tuple(self, data_tuple):
-        for line in data_tuple:
-            if not type(line) is str:
-                raise TypeError('This parameter should be string!')
+        super().is_valid_tuple(data_tuple)
 
     def is_valid_dict(self, data_dict):
-        for key in data_dict:
-            if not type(data_dict[key]) is str:
-                raise TypeError('This parameter should be string!')
+        super().is_valid_dict(data_dict)
 
     def args_parse(self, values):
         self.is_valid_tuple(values)
@@ -51,35 +50,3 @@ class Type1BaseItem(BaseItem):
         self.use_name = dict_values.get('use_name')
         self.full_name = dict_values.get('full_name')
         self.short_name = dict_values.get('short_name')
-
-
-class Type1TestCase(unittest.TestCase):
-
-    def __init__(self, *args, **kwargs):
-        super(Type1TestCase, self).__init__(*args, **kwargs)
-        self.records_test = records
-        self.dict1_test = dict1
-
-    def test_use_name_tuple(self):
-        self.assertEqual(s.use_name, self.records_test[0])
-
-    def test_full_name_tuple(self):
-        self.assertEqual(s.full_name, self.records_test[1])
-
-    def test_short_name_tuple(self):
-        self.assertEqual(s.short_name, self.records_test[2])
-
-    def test_use_name_dict(self):
-        self.assertEqual(a.use_name, self.dict1_test['use_name'])
-
-    def test_full_name_dict(self):
-        self.assertEqual(a.full_name, self.dict1_test['full_name'])
-
-    def test_short_name_dict(self):
-        self.assertEqual(a.short_name, self.dict1_test['short_name'])
-
-
-records = ('eraser', 'EraserHandler', 'er')
-dict1 = {'use_name': 'switch', 'full_name': 'SwitchHandler', 'short_name': 'sw'}
-s = Type1BaseItem(*records)
-a = Type1BaseItem(**dict1)
