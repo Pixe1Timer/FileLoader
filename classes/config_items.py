@@ -54,14 +54,29 @@ class Type1BaseItem(BaseItem):
 
 
 class Type1TestCase(unittest.TestCase):
-    def test_use_name(self):
-        self.assertEqual(s.use_name, 'eraser')
 
-    def test_full_name(self):
-        self.assertEqual(s.full_name, 'EraserHandler')
+    def __init__(self, *args, **kwargs):
+        super(Type1TestCase, self).__init__(*args, **kwargs)
+        self.records_test = records
+        self.dict1_test = dict1
 
-    def test_short_name(self):
-        self.assertEqual(s.short_name, 'er')
+    def test_use_name_tuple(self):
+        self.assertEqual(s.use_name, self.records_test[0])
+
+    def test_full_name_tuple(self):
+        self.assertEqual(s.full_name, self.records_test[1])
+
+    def test_short_name_tuple(self):
+        self.assertEqual(s.short_name, self.records_test[2])
+
+    def test_use_name_dict(self):
+        self.assertEqual(a.use_name, self.dict1_test['use_name'])
+
+    def test_full_name_dict(self):
+        self.assertEqual(a.full_name, self.dict1_test['full_name'])
+
+    def test_short_name_dict(self):
+        self.assertEqual(a.short_name, self.dict1_test['short_name'])
 
 
 records = ('eraser', 'EraserHandler', 'er')
