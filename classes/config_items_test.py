@@ -4,16 +4,16 @@ import unittest
 
 class Type1TestCase(unittest.TestCase):
     records = ('eraser', 'EraserHandler', 'er')
-    dict1 = {'use_name': 'switch', 'full_name': 'SwitchHandler', 'short_name': 'sw'}
+    dict1 = {'Process_ID': 'switch', 'Event_handler': 'SwitchHandler', 'Message_ID_suffix_2_letters': 'sw'}
 
     def test_tuple(self):
         t = Type1BaseItem(*self.records)
-        self.assertEqual(t.use_name, self.records[0])
-        self.assertEqual(t.full_name, self.records[1])
-        self.assertEqual(t.short_name, self.records[2])
+        self.assertEqual(t.Process_ID, self.records[0])
+        self.assertEqual(t.Event_handler, self.records[1])
+        self.assertEqual(t.Message_ID_suffix_2_letters, self.records[2])
 
     def test_dict(self):
         d = Type1BaseItem(**self.dict1)
-        self.assertEqual(d.use_name, self.dict1['use_name'])
-        self.assertEqual(d.full_name, self.dict1['full_name'])
-        self.assertEqual(d.short_name, self.dict1['short_name'])
+        self.assertEqual(d.Process_ID, self.dict1['Process_ID'])
+        self.assertEqual(d.Event_handler, self.dict1['Event_handler'])
+        self.assertEqual(d.Message_ID_suffix_2_letters, self.dict1['Message_ID_suffix_2_letters'])
