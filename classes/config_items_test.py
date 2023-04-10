@@ -1,27 +1,38 @@
-from config_items import ProcessConfigBaseItem
+from config_items import ProcessConfig, BaseItem, check_parametrised_value
 import unittest
 
 
 class Type1TestCase(unittest.TestCase):
-    records = ('eraser', 'EraserHandler', 'er', 'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT=')
-    dict1 = {'process_id': 'switch', 'event_handler': 'SwitchHandler', 'message_id_suffix': 'sw', 'path':
-             'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT='}
-    wrong_records = ('eRAser', 'EraserHandler', 'er', 'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT=')
 
     def test_tuple(self):
-        t = ProcessConfigBaseItem(*self.records)
-        self.assertEqual(t.process_id, self.records[0])
-        self.assertEqual(t.event_handler, self.records[1])
-        self.assertEqual(t.message_id_suffix_2_letters, self.records[2])
-        print(f'Input path:{t.din}, output path: {t.dout}')
+        records = ('eraser', 'EraserHandler', 'er', 'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT=')
+        t = ProcessConfig(*records)
+        self.assertEqual(t.process_id, records[0])
+        self.assertEqual(t.event_handler, records[1])
+        self.assertEqual(t.message_id_suffix, records[2])
+        self.assertEqual(t.din, '/usr/local/games/exch/proc/echo/in/')
+        self.assertEqual(t.dout, '')
 
     def test_dict(self):
-        d = ProcessConfigBaseItem(**self.dict1)
-        self.assertEqual(d.process_id, self.dict1['process_id'])
-        self.assertEqual(d.event_handler, self.dict1['event_handler'])
-        self.assertEqual(d.message_id_suffix_2_letters, self.dict1['message_id_suffix'])
-        print(f'Input path:{d.din}, output path: {d.dout}')
+        dict1 = {
+            'process_id': 'switch',
+            'event_handler': 'SwitchHandler',
+            'message_id_suffix': 'sw',
+            'path': 'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT='
+        }
+        d = ProcessConfig(**dict1)
+        self.assertEqual(d.process_id, dict1['process_id'])
+        self.assertEqual(d.event_handler, dict1['event_handler'])
+        self.assertEqual(d.message_id_suffix, dict1['message_id_suffix'])
+        self.assertEqual(d.din, '/usr/local/games/exch/proc/echo/in/')
+        self.assertEqual(d.dout, '')
 
     def test_exception(self):
+        not_underscore_records = (
+            'erASer',
+            'EraserHandler',
+            'er',
+            'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT='
+        )
         with self.assertRaises(ValueError):
-            e = ProcessConfigBaseItem(*self.wrong_records)
+            _e = ProcessConfig(*not_underscore_records)
