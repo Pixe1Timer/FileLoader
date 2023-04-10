@@ -16,26 +16,26 @@ class BaseItem(ABC):
         pass
 
     def is_valid_tuple(self, data_tuple):
-        for line in data_tuple[:-1]:
+        for line in data_tuple:
             if not type(line) is str:
-                raise TypeError('This parameter should be string!')
-            elif len(line) > 19:
-                raise ValueError('Length is out of range!')
+                raise TypeError('Этот параметр должен быть строкой!')
+            elif (len(line) > 19) and not (re.match('DIR.IN', line)):
+                raise ValueError('Значение превышает максимальную длину!')
         if not data_tuple[0].islower() or not data_tuple[2].islower():
-            raise ValueError('Values are not lowercase!')
+            raise ValueError('Значения не в нижнем регистре!')
 
     def is_valid_dict(self, data_dict):
         for key in data_dict:
             if key != 'path':
                 if not type(data_dict[key]) is str:
-                    raise TypeError('This parameter should be string!')
+                    raise TypeError('Этот параметр должен быть строкой!')
                 if len(data_dict[key]) > 10000:
-                    raise ValueError('Length is out of range!')
+                    raise ValueError('Значение превышает максимальную длину!')
                 if (key != 'event_handler') and not data_dict[key].islower():
-                    raise ValueError('Values are not lowercase!')
+                    raise ValueError('Значения не в нижнем регистре!')
 
 
-class Type1BaseItem(BaseItem):
+class ProcessConfigBaseItem(BaseItem):
     process_id: str
     event_handler: str
     message_id_suffix_2_letters: str
@@ -45,6 +45,12 @@ class Type1BaseItem(BaseItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.path_list = []
+        #self.parameters: [
+        #    {'attribute_name': 'process_id', 'check_max_length': 'True', 'max_length': '8'},
+        #    {'attribute_name': 'event_handler', 'check_max_length': 'True', 'max_length': '19'},
+        #    {'attribute_name': 'message_id_suffix', 'check_max_length': 'True', 'max_length': '2'},
+        #    {'attribute_name': 'path', 'check_max_length': 'False', 'max_length': ''}
+        #]
 
     def is_valid_tuple(self, data_tuple):
         super().is_valid_tuple(data_tuple)
@@ -60,7 +66,6 @@ class Type1BaseItem(BaseItem):
             raise ValueError('Невозможно найти нужные параметры!')
         self.din = splitted_path[0].split('=')[1]
         self.dout = splitted_path[1].split('=')[1]
-        return self.din, self.dout
 
     def args_parse(self, values):
         self.is_valid_tuple(values)
@@ -74,6 +79,6 @@ class Type1BaseItem(BaseItem):
         self.is_valid_dict(dict_values)
         self.process_id = dict_values.get('process_id')
         self.event_handler = dict_values.get('event_handler')
-        self.message_id_suffix_2_letters = dict_values.get('message_id_suffix_2_letters')
+        self.message_id_suffix_2_letters = dict_values.get('message_id_suffix')
         self.path_list = dict_values['path']
         self.split_path(self.path_list)
