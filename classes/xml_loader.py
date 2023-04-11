@@ -2,11 +2,11 @@ from lxml import etree
 
 
 class XMLFileLoader:
-
-    def __init__(self, xml_route=None):
+    def __init__(self, xml_content=None):
+        self.store_class = None
         self.xml_data = None
-        if xml_route is None:
-            self.xml_route = {
+        if xml_content is None:
+            self.xml_content = {
                 'pattern': './PATTERNS',
                 'source': './SOURCES',
                 'target': './TARGETS',
@@ -15,17 +15,17 @@ class XMLFileLoader:
                 'desc': './DESC'
             }
         else:
-            self.xml_route = xml_route
+            self.xml_content = xml_content
 
     def load(self, file_path):
         with open(file_path) as f:
             self.xml_data = etree.parse(f)
 
     def parse(self):
-        chains = []
-        for chain_element in self.xml_data.xpath('/chain'):
-            chain = {}
-            for key, value in self.xml_route:
-                chain[key] = chain_element.xpath(value).text
-            chains.append(chain)
-        return chains
+        elements_list = []
+        for element in self.xml_data.xpath('/chain'):
+            sub_elements = {}
+            for key, value in self.xml_content:
+                sub_elements[key] = element.xpath(value).text
+            elements_list.append(self.store_class(sub_elements) if self.store_class else sub_elements)
+        return elements_list
