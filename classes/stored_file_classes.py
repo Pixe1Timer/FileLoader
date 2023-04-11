@@ -1,4 +1,6 @@
 import os
+from typing import Iterable
+
 from classes.misc_classes import BlockedFilesDetector
 
 
@@ -9,10 +11,10 @@ class StoredFile:
         self.file_name = file_name
 
     def __str__(self):
-        return str(self.file_path)
+        return str(self.get_full_file_name)
 
     @property
-    def full_file_name(self):
+    def get_full_file_name(self):
         return os.path.join(self.file_path, self.file_name)
 
 
@@ -20,22 +22,19 @@ class StoredFileContainer:
 
     def __init__(self, file_directory: str):
         self.file_directory = file_directory
-        self.paths_list = []
-        files_list = os.listdir(file_directory)
-        for file in files_list:
-            self.paths_list.append(StoredFile(file_directory, file))
+        self.files_list = []
+        for files_instance in os.listdir(file_directory):
+            self.files_list.append(StoredFile(file_directory, files_instance))
 
-    def unlocked_files(self):
+    def get_unlocked_files(self):
         unlocked_files_list = []
         block_files_det_obj = BlockedFilesDetector()
-        for one_file_path in self.paths_list:
-            if not block_files_det_obj.file_is_locked(one_file_path.full_file_name):
-                unlocked_files_list.append(one_file_path.full_file_name)
+        for full_file_directory in self.files_list:
+            if not block_files_det_obj.file_is_locked(full_file_directory.get_full_file_name):
+                unlocked_files_list.append(full_file_directory.get_full_file_name)
         return unlocked_files_list
 
 
-"""
 sf = StoredFile(r'/home/ubuntu/Downloads', 'PythonInstall.txt')
 sfc = StoredFileContainer(sf.file_path)
-print(sfc.unlocked_files())
-"""
+print(sfc.get_unlocked_files())
