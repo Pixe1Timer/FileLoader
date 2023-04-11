@@ -2,8 +2,20 @@ from lxml import etree
 
 
 class XMLFileLoader:
-    def __init__(self):
+
+    def __init__(self, xml_route=None):
         self.xml_data = None
+        if xml_route is None:
+            self.xml_route = {
+                'pattern': './PATTERNS',
+                'source': './SOURCES',
+                'target': './TARGETS',
+                'types': './TYPES',
+                'flags': './FLAGS',
+                'desc': './DESC'
+            }
+        else:
+            self.xml_route = xml_route
 
     def load(self, file_path):
         with open(file_path) as f:
@@ -12,18 +24,8 @@ class XMLFileLoader:
     def parse(self):
         chains = []
         for chain_element in self.xml_data.xpath('/chain'):
-            pattern = chain_element.xpath('./PATTERNS').text
-            source = chain_element.xpath('./SOURCES').text
-            target = chain_element.xpath('./TARGETS').text
-            types = chain_element.xpath('./TYPES').text
-            flags = chain_element.xpath('./FLAGS').text
-            desc = chain_element.xpath('./DESC').text
-
-            chain = {'pattern': pattern,
-                     'source': source,
-                     'target': target,
-                     'types': types,
-                     'flags': flags,
-                     'desc': desc}
+            chain = {}
+            for key, value in self.xml_route:
+                chain[key] = chain_element.xpath(value).text
             chains.append(chain)
         return chains
