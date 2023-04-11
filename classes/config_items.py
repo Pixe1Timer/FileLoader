@@ -159,3 +159,113 @@ class ProcessConfig(BaseItem):
         self.message_id_suffix = dict_values.get('message_id_suffix')
         path_list = dict_values['path']
         self.split_path(path_list)
+
+
+class UserConfig(BaseItem):
+    user_id: str
+    member_id: str
+    in_process_id: str
+    out_process_id: str
+    address: str
+    encrypt_id: str
+    key_alias: str
+    flags: str
+    user_desc: str
+    params_check = [
+        {
+            'param_name': 'user_id',
+            'check_max_length': True,
+            'max_length': 8,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'member_id',
+            'check_max_length': True,
+            'max_length': 8,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'in_process_id',
+            'check_max_length': True,
+            'max_length': 8,
+            'mandatory_lowercase': True,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'out_process_id',
+            'check_max_length': True,
+            'max_length': 8,
+            'mandatory_lowercase': True,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'address',
+            'check_max_length': False,
+            'mandatory_lowercase': True,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'encrypt_id',
+            'check_max_length': True,
+            'max_length': 10,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'key_alias',
+            'check_max_length': True,
+            'max_length': 1111,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'flags',
+            'check_max_length': True,
+            'max_length': 30,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'user_desc',
+            'check_max_length': False,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        }
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def args_parse(self, values: typing.Tuple):
+        """
+        Метод парсит данные и присваивает значения позиционных аргументов экземпляру класса
+        :param values: передаваемые в виде кортежа значения
+        """
+        self.is_valid_tuple(values)
+        self.user_id = values[0]
+        self.member_id = values[1]
+        self.in_process_id = values[2]
+        self.out_process_id = values[3]
+        self.address = values[4]
+        self.encrypt_id = values[5]
+        self.key_alias = values[6]
+        self.flags = values[7]
+        self.user_desc = values[8]
+
+    def kwargs_parse(self, dict_values: typing.Dict):
+        """
+        Метод парсит данные и присваивает значения именованных аргументов экземпляру класса
+        :param dict_values: передаваемые в виде словаря значения
+        """
+        self.is_valid_dict(dict_values)
+        self.user_id = dict_values.get('user_id')
+        self.member_id = dict_values.get('member_id')
+        self.in_process_id = dict_values.get('in_process_id')
+        self.out_process_id = dict_values.get('out_process_id')
+        self.address = dict_values.get('address')
+        self.encrypt_id = dict_values.get('encrypt_id')
+        self.key_alias = dict_values.get('key_alias')
+        self.flags = dict_values.get('flags')
+        self.user_desc = dict_values.get('user_desc')
