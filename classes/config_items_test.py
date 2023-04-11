@@ -1,8 +1,8 @@
-from config_items import ProcessConfig, BaseItem, check_parametrised_value
+from config_items import ProcessConfig
 import unittest
 
 
-class Type1TestCase(unittest.TestCase):
+class ProcessConfigTestCase(unittest.TestCase):
 
     def test_tuple(self):
         records = ('eraser', 'EraserHandler', 'er', 'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT=')
