@@ -2,8 +2,9 @@ from lxml import etree
 
 
 class XMLFileLoader:
+    store_class = None
+
     def __init__(self, xml_content=None):
-        self.store_class = None
         self.xml_data = None
         if xml_content is None:
             self.xml_content = {
