@@ -1,4 +1,4 @@
-from config_items import ProcessConfig, UserConfig
+from config_items import ProcessConfig, UserConfig, GroupConfig
 import unittest
 
 
@@ -101,11 +101,11 @@ class ProcessConfigTestCase(unittest.TestCase):
         """
         unittest для проверки вызова исключения
         """
-        not_underscore_records_user = (
+        len_exception_records_user = (
             '0015',
             '015',
             'csin',
-            'mailout',
+            'mailoutaaaaaaaaaaaaaaaaaa',
             'sas-tamcard@primbank.ru',
             'CS',
             'BC=0015',
@@ -113,4 +113,39 @@ class ProcessConfigTestCase(unittest.TestCase):
             'PRIMORYE bank'
         )
         with self.assertRaises(ValueError):
-            _aa = ProcessConfig(*not_underscore_records_user)
+            _aa = UserConfig(*len_exception_records_user)
+
+    def test_tuple_group(self):
+        """
+        unittest для проверки передачи значений кортежа
+        """
+        records_group = ('EFILETMP',
+                         'TCTX,MOX',
+                         )
+        t2 = GroupConfig(*records_group)
+        self.assertEqual(t2.group_name, records_group[0])
+        self.assertEqual(t2.user1, 'TCTX')
+        self.assertEqual(t2.user2, 'MOX')
+
+    def test_dict_group(self):
+        """
+        unittest для проверки передачи значений словаря
+        """
+        dict_group = {
+            'group_name': 'EFILETMP',
+            'users': 'TCTX,MOX'
+        }
+        d2 = GroupConfig(**dict_group)
+        self.assertEqual(d2.group_name, dict_group['group_name'])
+        self.assertEqual(d2.user1, 'TCTX')
+        self.assertEqual(d2.user2, 'MOX')
+
+    def test_exception_group(self):
+        """
+        unittest для проверки вызова исключения
+        """
+        len_exception_records_group = ('EFILETMPppppppppppppp',
+                                       'TCTX',
+                                       'MOX')
+        with self.assertRaises(ValueError):
+            _bb = GroupConfig(*len_exception_records_group)

@@ -269,3 +269,56 @@ class UserConfig(BaseItem):
         self.key_alias = dict_values.get('key_alias')
         self.flags = dict_values.get('flags')
         self.user_desc = dict_values.get('user_desc')
+
+
+class GroupConfig(BaseItem):
+    group_name: str
+    user1: str
+    user2: str
+    params_check = [
+        {
+            'param_name': 'group_name',
+            'check_max_length': True,
+            'max_length': 8,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        },
+        {
+            'param_name': 'users',
+            'check_max_length': False,
+            'mandatory_lowercase': False,
+            'param_is_string': True
+        }
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def split_users(self, users: str):
+        """
+        Метод разделят переменную пользователей и присваивает значения параметрам класса
+        :param users: изначально переданные пользователи
+        """
+        splitted_users = users.split(',')
+        self.user1 = splitted_users[0]
+        self.user2 = splitted_users[1]
+
+    def args_parse(self, values: typing.Tuple):
+        """
+        Метод парсит данные и присваивает значения позиционных аргументов экземпляру класса
+        :param values: передаваемые в виде кортежа значения
+        """
+        self.is_valid_tuple(values)
+        self.group_name = values[0]
+        users = values[1]
+        self.split_users(users)
+
+    def kwargs_parse(self, dict_values: typing.Dict):
+        """
+        Метод парсит данные и присваивает значения именованных аргументов экземпляру класса
+        :param dict_values: передаваемые в виде словаря значения
+        """
+        self.is_valid_dict(dict_values)
+        self.group_name = dict_values.get('group_name')
+        users = dict_values['users']
+        self.split_users(users)
