@@ -2,17 +2,16 @@ from lxml import etree
 
 
 class XMLFileLoader:
-    '''
+    """
     Элемент для загрузки и разбора данных файла .xml
-    :argument None store_class: спецификация класса
-    '''
+    """
     store_class = None
 
     def __init__(self, xml_content=None):
-        '''
-        Конструктор класса.
-        :param dict xml_content: содержимое файла, если не указано - назначается по умолчанию
-        '''
+        """
+        Конструктор класса
+        :param dict[str] | None xml_content: содержимое файла, если не указано - назначается по умолчанию
+        """
         self.xml_data = None
         if xml_content is None:
             self.xml_content = {
@@ -27,18 +26,18 @@ class XMLFileLoader:
             self.xml_content = xml_content
 
     def load(self, file_path):
-        '''
+        """
         Загрузка файла .xml
         :param str file_path: путь к .xml файлу
-        '''
+        """
         with open(file_path) as f:
             self.xml_data = etree.parse(f)
 
-    def parse(self):
-        '''
+    def parse(self) -> list:
+        """
         Разбор данных файла
         :return: list: возврат обработанных данных файла
-        '''
+        """
         elements_list = []
         for element in self.xml_data.xpath('/chain'):
             sub_elements = {}
