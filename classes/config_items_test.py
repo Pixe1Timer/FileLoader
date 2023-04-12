@@ -120,7 +120,7 @@ class ProcessConfigTestCase(unittest.TestCase):
         unittest для проверки передачи значений кортежа
         """
         records_group = ('EFILETMP',
-                         'TCTX,MOX',
+                         '       TCTX,        MOX        ',
                          )
         t2 = GroupConfig(*records_group)
         self.assertEqual(t2.group_name, records_group[0])
@@ -131,12 +131,12 @@ class ProcessConfigTestCase(unittest.TestCase):
         unittest для проверки передачи значений словаря
         """
         dict_group = {
-            'group_name': 'EFILETMP',
-            'users': 'TCTX,MOX'
+            'group_name': 'GCERT',
+            'users': 'CERT,CERTC,FCTR,DMA'
         }
         d2 = GroupConfig(**dict_group)
         self.assertEqual(d2.group_name, dict_group['group_name'])
-        self.assertEqual(d2.users, ['TCTX', 'MOX'])
+        self.assertEqual(d2.users, ['CERT', 'CERTC', 'FCTR', 'DMA'])
 
     def test_exception_group(self):
         """

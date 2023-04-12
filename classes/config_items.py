@@ -299,7 +299,8 @@ class GroupConfig(BaseItem):
         :param users: изначально переданные пользователи
         """
         splitted_users = users.split(',')
-        self.users= splitted_users
+        stripped_users = [user.strip() for user in splitted_users]
+        self.users = stripped_users
 
     def args_parse(self, values: typing.Tuple):
         """
