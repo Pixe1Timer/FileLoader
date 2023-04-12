@@ -30,7 +30,7 @@ class BaseItem(ABC):
     интерфейсный класс для хранения объектов типа Item
     """
     params_check = []
-    amount = 0
+    tuple_params_amount = 0
 
     def __init__(self, *args, **kwargs):
         """
@@ -68,7 +68,7 @@ class BaseItem(ABC):
             check_parametrised_value(param_check_value, param_value)
 
     def check_length(self, inputted):
-        len_recorded = self.amount
+        len_recorded = self.tuple_params_amount
         if len_recorded != len(inputted):
             raise ValueError(f'Количество параметров не совпадает! {len(inputted)} - количество передаваемых'
                              f'параметров, {len_recorded} - количество записанных параметров')
@@ -91,7 +91,7 @@ class ProcessConfig(BaseItem):
     dir_out: str
         путь выходной директории
     """
-    amount = 4
+    tuple_params_amount = 4
     process_id: str
     event_handler: str
     message_id_suffix: str
@@ -172,7 +172,7 @@ class ProcessConfig(BaseItem):
 
 
 class UserConfig(BaseItem):
-    amount = 9
+    tuple_params_amount = 9
     user_id: str
     member_id: str
     in_process_id: str
@@ -284,7 +284,7 @@ class UserConfig(BaseItem):
 
 
 class GroupConfig(BaseItem):
-    amount = 2
+    tuple_params_amount = 2
     group_name: str
     users: list
     params_check = [
