@@ -44,6 +44,7 @@ class ProcessConfigTestCase(unittest.TestCase):
             'er',
             'DIR.IN=/usr/local/games/exch/proc/echo/in/;DIR.OUT='
         )
+
         with self.assertRaises(ValueError):
             _e = ProcessConfig(*not_underscore_records)
 
