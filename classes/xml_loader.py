@@ -7,7 +7,7 @@ class XMLFileLoader:
     """
     store_class = None
 
-    def __init__(self, xml_content=None):
+    def __init__(self, xml_content: dict | None = None):
         """
         Конструктор класса
         :param dict[str] | None xml_content: содержимое файла, если не указано - назначается по умолчанию
@@ -25,7 +25,7 @@ class XMLFileLoader:
         else:
             self.xml_content = xml_content
 
-    def load(self, file_path):
+    def load(self, file_path: str):
         """
         Загрузка файла .xml
         :param str file_path: путь к .xml файлу
