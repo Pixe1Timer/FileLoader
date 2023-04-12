@@ -30,6 +30,7 @@ class BaseItem(ABC):
     интерфейсный класс для хранения объектов типа Item
     """
     params_check = []
+    amount = 0
 
     def __init__(self, *args, **kwargs):
         """
@@ -66,6 +67,12 @@ class BaseItem(ABC):
             param_value = data_dict[param_check_value.get('param_name')]
             check_parametrised_value(param_check_value, param_value)
 
+    def check_length(self, inputted):
+        len_recorded = self.amount
+        if len_recorded != len(inputted):
+            raise ValueError(f'Количество параметров не совпадает! {len(inputted)} - количество передаваемых'
+                             f'параметров, {len_recorded} - количество записанных параметров')
+
 
 class ProcessConfig(BaseItem):
     """
@@ -84,6 +91,7 @@ class ProcessConfig(BaseItem):
     dir_out: str
         путь выходной директории
     """
+    amount = 4
     process_id: str
     event_handler: str
     message_id_suffix: str
@@ -141,7 +149,9 @@ class ProcessConfig(BaseItem):
         Метод парсит данные и присваивает значения позиционных аргументов экземпляру класса
         :param values: передаваемые в виде кортежа значения
         """
+
         self.is_valid_tuple(values)
+        self.check_length(values)
         self.process_id = values[0]
         self.event_handler = values[1]
         self.message_id_suffix = values[2]
@@ -162,6 +172,7 @@ class ProcessConfig(BaseItem):
 
 
 class UserConfig(BaseItem):
+    amount = 9
     user_id: str
     member_id: str
     in_process_id: str
@@ -244,6 +255,7 @@ class UserConfig(BaseItem):
         :param values: передаваемые в виде кортежа значения
         """
         self.is_valid_tuple(values)
+        self.check_length(values)
         self.user_id = values[0]
         self.member_id = values[1]
         self.in_process_id = values[2]
@@ -272,6 +284,7 @@ class UserConfig(BaseItem):
 
 
 class GroupConfig(BaseItem):
+    amount = 2
     group_name: str
     users: list
     params_check = [
@@ -308,6 +321,7 @@ class GroupConfig(BaseItem):
         :param values: передаваемые в виде кортежа значения
         """
         self.is_valid_tuple(values)
+        self.check_length(values)
         self.group_name = values[0]
         users = values[1]
         self.split_users(users)
