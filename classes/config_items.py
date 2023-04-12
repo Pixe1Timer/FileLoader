@@ -273,8 +273,7 @@ class UserConfig(BaseItem):
 
 class GroupConfig(BaseItem):
     group_name: str
-    user1: str
-    user2: str
+    users: list
     params_check = [
         {
             'param_name': 'group_name',
@@ -300,8 +299,7 @@ class GroupConfig(BaseItem):
         :param users: изначально переданные пользователи
         """
         splitted_users = users.split(',')
-        self.user1 = splitted_users[0]
-        self.user2 = splitted_users[1]
+        self.users= splitted_users
 
     def args_parse(self, values: typing.Tuple):
         """

@@ -124,8 +124,7 @@ class ProcessConfigTestCase(unittest.TestCase):
                          )
         t2 = GroupConfig(*records_group)
         self.assertEqual(t2.group_name, records_group[0])
-        self.assertEqual(t2.user1, 'TCTX')
-        self.assertEqual(t2.user2, 'MOX')
+        self.assertEqual(t2.users, ['TCTX', 'MOX'])
 
     def test_dict_group(self):
         """
@@ -137,8 +136,7 @@ class ProcessConfigTestCase(unittest.TestCase):
         }
         d2 = GroupConfig(**dict_group)
         self.assertEqual(d2.group_name, dict_group['group_name'])
-        self.assertEqual(d2.user1, 'TCTX')
-        self.assertEqual(d2.user2, 'MOX')
+        self.assertEqual(d2.users, ['TCTX', 'MOX'])
 
     def test_exception_group(self):
         """
