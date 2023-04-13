@@ -33,7 +33,7 @@ class TestStoredFileContainer(unittest.TestCase):
                 # Создать файлы
                 for i in range(100):
                     is_file_blocked = random.choice([True, False])
-                    new_file = create_new_file(temporary_folder, (str(i)))
+                    new_file = create_new_file(temporary_folder, str(i))
                     # Если True - создать файл с блокировкой
                     if is_file_blocked:
                         blocked_files_list.append(new_file)
