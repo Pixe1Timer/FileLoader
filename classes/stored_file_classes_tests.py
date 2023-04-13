@@ -6,14 +6,14 @@ from classes.stored_file_classes import StoredFileContainer
 from utils.file_utils import create_temp_dir, remove_temp_dir
 
 
-def create_new_file(temporary_dir: str, any_number: str):
+def create_new_file(temporary_dir: str, file_name: str):
     """
     Функция, предназначенная для создания нового файла
     :param str temporary_dir: путь до файла
-    :param  str any_number: номер файла
+    :param  str file_name: имя файла
     :return: any_file: файл
     """
-    any_file_name = os.path.join(temporary_dir, any_number)
+    any_file_name = os.path.join(temporary_dir, file_name)
     any_file = open(any_file_name, mode='w')
     any_file.write('Some comment')
     return any_file
@@ -33,7 +33,7 @@ class TestStoredFileContainer(unittest.TestCase):
                 # Создать файлы
                 for i in range(100):
                     is_file_blocked = random.choice([True, False])
-                    new_file = create_new_file(temporary_folder, str(i))
+                    new_file = create_new_file(temporary_folder, (str(i)))
                     # Если True - создать файл с блокировкой
                     if is_file_blocked:
                         blocked_files_list.append(new_file)
