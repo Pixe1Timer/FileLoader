@@ -23,12 +23,12 @@ class StoredFile:
         """
         return self.get_full_file_name
 
-    def get_full_file_name(self, file_title: str):
+    @property
+    def get_full_file_name(self):
         """
         Получить полный путь файла
         :return: str: объединение пути и имени файла
         """
-        self.file_name = file_title
         return os.path.join(self.file_path, self.file_name)
 
 
@@ -39,7 +39,6 @@ class StoredFileContainer(StoredFile):
     """
     def __init__(self, file_path: str, file_name: str):
         super().__init__(file_path, file_name)
-
         """
         Класс конструктор. Заполняет полными директориями фалов
         список для последующего использования класса
@@ -47,7 +46,7 @@ class StoredFileContainer(StoredFile):
         """
         self.files_list = []
         for files_instance in os.listdir(file_path):
-            self.files_list.append(self.get_full_file_name(files_instance))
+            self.files_list.append(os.path.join(file_path, files_instance))
 
     def get_unlocked_files(self) -> list[str]:
         """
@@ -60,3 +59,7 @@ class StoredFileContainer(StoredFile):
             if not block_files_det_obj.file_is_locked(full_file_directory):
                 unlocked_files_list.append(full_file_directory)
         return unlocked_files_list
+
+
+sfc = StoredFileContainer(r'/home/ubuntu/Downloads', 'PythonInstall.txt')
+print(sfc.get_unlocked_files())
