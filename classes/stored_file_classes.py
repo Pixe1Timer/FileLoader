@@ -1,6 +1,5 @@
 import os
 from classes.misc_classes import BlockedFilesDetector
-import typing
 
 
 class StoredFile:

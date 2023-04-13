@@ -33,16 +33,16 @@ class TestStoredFileContainer(unittest.TestCase):
                 # Создать файлы
                 for i in range(100):
                     is_file_blocked = random.choice([True, False])
-                    get_new_file = create_new_file(temporary_folder, str(i))
+                    new_file = create_new_file(temporary_folder, str(i))
                     # Если True - создать файл с блокировкой
                     if is_file_blocked:
-                        blocked_files_list.append(get_new_file)
+                        blocked_files_list.append(new_file)
                     # Иначе создать файл без блокировки
                     else:
-                        get_new_file.close()
-                        unblocked_file = open(get_new_file.name, mode='r')
+                        new_file.close()
+                        unblocked_file = open(new_file.name, mode='r')
                         _contents = unblocked_file.read()
-                        unblocked_files_list.append(get_new_file)
+                        unblocked_files_list.append(unblocked_file)
                 stored_file_container_obj = StoredFileContainer(temporary_folder)
                 # Сравнить списки. Если количество элементов равно - тест пройден
                 self.assertEqual(len(unblocked_files_list), len(stored_file_container_obj.get_unlocked_files()))
