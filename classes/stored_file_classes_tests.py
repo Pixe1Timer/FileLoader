@@ -6,37 +6,52 @@ from classes.stored_file_classes import StoredFileContainer
 from utils.file_utils import create_temp_dir, remove_temp_dir
 
 
-class TestStoredFileContainer(unittest.TestCase):
+def create_new_file(temporary_dir: str, any_number: str):
+    """
+    Функция, предназначенная для создания нового файла
+    :param str temporary_dir: путь до файла
+    :param  str any_number: номер файла
+    :return: any_file: файл
+    """
+    any_file_name = os.path.join(temporary_dir, any_number)
+    any_file = open(any_file_name, mode='w')
+    any_file.write('Some comment')
+    return any_file
 
+
+class TestStoredFileContainer(unittest.TestCase):
+    """
+    Unit test для тестирования компоненты get_unlocked_files
+    """
     def test_block_files(self):
         if platform.system() == 'Linux':
+            # Создать временную папку
             temporary_folder = create_temp_dir()
             blocked_files_list = []
             unblocked_files_list = []
-            random_file_names = ['block_file.txt', 'unblocked_file.txt']
             try:
+                # Создать файлы
                 for i in range(100):
-                    random_file_name = random.choice(random_file_names)
-                    if random_file_name == 'block_file.txt':
-                        blocked_file_name = os.path.join(temporary_folder, str(i).join('block_file.txt'))
-                        blocked_file = open(blocked_file_name, mode='w')
-                        blocked_file.write('Some contents')
-                        blocked_files_list.append(blocked_file_name)
+                    is_file_blocked = random.choice([True, False])
+                    get_new_file = create_new_file(temporary_folder, str(i))
+                    # Если True - создать файл с блокировкой
+                    if is_file_blocked:
+                        blocked_files_list.append(get_new_file)
+                    # Иначе создать файл без блокировки
                     else:
-                        unblocked_file_name = os.path.join(temporary_folder, str(i).join('unblocked_file.txt'))
-                        unblocked_file = open(unblocked_file_name, mode='w')
-                        unblocked_file.write('Some contents')
-                        unblocked_file.close()
-                        unblocked_file = open(unblocked_file_name, mode='r')
+                        get_new_file.close()
+                        unblocked_file = open(get_new_file.name, mode='r')
                         _contents = unblocked_file.read()
-                        unblocked_files_list.append(unblocked_file_name)
+                        unblocked_files_list.append(get_new_file)
                 stored_file_container_obj = StoredFileContainer(temporary_folder)
-                self.assertEqual(len(unblocked_files_list), len(stored_file_container_obj.get_unlocked_files))
+                # Сравнить списки. Если количество элементов равно - тест пройден
+                self.assertEqual(len(unblocked_files_list), len(stored_file_container_obj.get_unlocked_files()))
             finally:
-                for any_file in blocked_files_list:
-                    with open(any_file) as file_txt:
-                        file_txt.close()
-                for any_file in unblocked_files_list:
-                    with open(any_file) as file_txt:
-                        file_txt.close()
+                # Закрыть файлы без блокировки
+                for any_unblocked_file in unblocked_files_list:
+                    any_unblocked_file.close()
+                # Закрыть файлы с блокировкой
+                for any_blocked_file in blocked_files_list:
+                    any_blocked_file.close()
+                # Удалить папку
                 remove_temp_dir(temporary_folder)

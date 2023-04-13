@@ -49,10 +49,10 @@ class StoredFileContainer:
         for files_instance in os.listdir(file_directory):
             self.files_list.append(StoredFile(file_directory, files_instance))
 
-    def get_unlocked_files(self) -> typing.Iterable[str]:
+    def get_unlocked_files(self) -> list[str]:
         """
         Проверить блокирован ли файл и отобрать неблокированные файлы
-        :return: Iterable[str]: список незаблокированных файлов
+        :return: list[str]: список незаблокированных файлов
         """
         unlocked_files_list = []
         block_files_det_obj = BlockedFilesDetector()
