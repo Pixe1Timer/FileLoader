@@ -62,8 +62,3 @@ class StoredFileContainer:
             if not block_files_det_obj.file_is_locked(full_file_directory.get_full_file_name):
                 unlocked_files_list.append(full_file_directory.get_full_file_name)
         return unlocked_files_list
-
-
-sc = StoredFile('/home/ubuntu/Downloads', "Python install.txt")
-sfc = StoredFileContainer(sc.file_path)
-print(sfc.get_unlocked_files())
