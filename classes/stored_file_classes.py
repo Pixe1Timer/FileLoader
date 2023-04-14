@@ -37,16 +37,19 @@ class StoredFileContainer:
     Класс, предназначенный для получения списка файлов и определения
     готовности файлов для обработки(отсутствие блокирововк на файле)
     """
-    def __init__(self, file_directory: str):
+    path_class = None
+
+    def __init__(self, file_directory: str, file_title: str):
         """
         Класс конструктор. Заполняет полными директориями фалов
         список для последующего использования класса
         :param str file_directory: путь файла без имени файла
         """
         self.file_directory = file_directory
+        self.file_title = file_title
         self.files_list = []
         for files_instance in os.listdir(file_directory):
-            self.files_list.append(StoredFile(file_directory, files_instance))
+            self.files_list.append(os.path.join(file_directory, files_instance))
 
     def get_unlocked_files(self) -> list[str]:
         """
@@ -56,6 +59,12 @@ class StoredFileContainer:
         unlocked_files_list = []
         block_files_det_obj = BlockedFilesDetector()
         for full_file_directory in self.files_list:
-            if not block_files_det_obj.file_is_locked(full_file_directory.get_full_file_name):
-                unlocked_files_list.append(full_file_directory.get_full_file_name)
+            self.path_class = full_file_directory
+            if not block_files_det_obj.file_is_locked(self.path_class):
+                unlocked_files_list.append(self.path_class)
         return unlocked_files_list
+
+
+#sf = StoredFile('/home/ubuntu/Downloads', 'Python install')
+#sfc = StoredFileContainer('/home/ubuntu/Downloads')
+#print(sfc.get_unlocked_files())
