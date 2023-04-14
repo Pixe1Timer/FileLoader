@@ -1,6 +1,5 @@
 import os
 from classes.misc_classes import BlockedFilesDetector
-import typing
 
 
 class StoredFile:
@@ -38,7 +37,7 @@ class StoredFileContainer:
     Класс, предназначенный для получения списка файлов и определения
     готовности файлов для обработки(отсутствие блокирововк на файле)
     """
-    path_class: type[StoredFile]
+    path_class: type[object]
     path_class = StoredFile
 
     def __init__(self, file_directory: str):
