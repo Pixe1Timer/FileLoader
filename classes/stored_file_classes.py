@@ -22,9 +22,6 @@ class StoredFile:
         self.file_path = file_path
         self.file_name = file_name
 
-    def get_certificate_values(self):
-        pass
-
     def __str__(self):
         """
         Строковое представление метода get_full_file_name
@@ -43,11 +40,14 @@ class StoredFile:
     @property
     def get_splited_file_name(self):
         splited_file_name = self.file_name.split('.')
-        self.bank_code = splited_file_name[0]
-        self.snils = splited_file_name[1]
-        self.date_and_time = splited_file_name[2]
-        self.certificate_condition = splited_file_name[3]
-        return splited_file_name
+        if len(splited_file_name) == 4:
+            self.bank_code = splited_file_name[0]
+            self.snils = splited_file_name[1]
+            self.date_and_time = splited_file_name[2]
+            self.certificate_condition = splited_file_name[3]
+            return splited_file_name
+        else:
+            raise ValueError(f'{self.file_name} не является сертификатом!')
 
 
 class StoredFileContainer:
@@ -86,21 +86,13 @@ class StoredFileContainer:
                 unlocked_files_list.append(full_file_directory.get_full_file_name)
         return unlocked_files_list
 
-    def make_a_choice(self, choice: str):
-        self.choice = choice
-        if choice == 'cer':
-            self.get_available_certificates()
-        elif choice == 'del':
-
-        elif choice == 'all'
-
-        else:
-            raise ValueError('Введите "cer", "del" или "all"')
-
     def get_deleted_certificates(self):
+        checked_certificates_list = []
+
+
         pass
 
-    def get_available_certificates(self) -> 'typing.Iterable[StoredFile]':
+    def get_certificates(self) -> 'typing.Iterable[StoredFile]':
         checked_certificates_list = []
         for certificate in self.certificates_list:
             splited_file_name = certificate.get_splited_file_name
@@ -111,7 +103,4 @@ class StoredFileContainer:
                 self.certificate_condition = splited_file_name[3]
                 if self.certificate_condition == 'cer':
                     checked_certificates_list.append(certificate)
-#        return checked_certificates_list
-
-    def get_all_certificates(self):
-        pass
+        return checked_certificates_list
