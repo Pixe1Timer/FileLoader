@@ -12,7 +12,9 @@ class FileExec:
                                 stderr=subprocess.STDOUT)
         if result.returncode != 0:
             raise Exception(f'Invalid result: {result.returncode}')
-        result.stdout.decode("oem")
+        decoded_out = result.stdout.decode("oem")
+        decoded_out.splitlines()
+        return result.returncode, decoded_out
 
 
 class EncryptExec:
@@ -23,11 +25,12 @@ class EncryptExec:
         self.cert = cert
         self.msg_to_code = msg_to_code
         self.coded_msg = coded_msg
-        self.exec_encr()
+        self.output = self.exec_encr()
 
     def exec_encr(self):
         encr_obj = FileExec(self.file, self.code, self.param, self.cert, self.msg_to_code, self.coded_msg)
-        encr_obj.exec()
+        exec_out = encr_obj.exec()
+        return exec_out
 
 
 class DecryptExec:
@@ -38,11 +41,12 @@ class DecryptExec:
         self.cont = cont
         self.msg_to_decode = msg_to_decode
         self.decoded_msg = decoded_msg
-        self.exec_decr()
+        self.output = self.exec_decr()
 
     def exec_decr(self):
         decr_obj = FileExec(self.file, self.code, self.param, self.cont, self.msg_to_decode, self.decoded_msg)
-        decr_obj.exec()
+        decr_out = decr_obj.exec()
+        return decr_out
 
 
 class SetSignatureExec:
@@ -52,11 +56,12 @@ class SetSignatureExec:
         self.param = '-dn'
         self.cert = cert
         self.file_to_sign = file_to_sign
-        self.exec_set_signature()
+        self.output = self.exec_set_signature()
 
     def exec_set_signature(self):
         set_obj = FileExec(self.file, self.code, self.param, self.cert, self.file_to_sign)
-        set_obj.exec()
+        set_out = set_obj.exec()
+        return set_out
 
 
 class UnsetSignatureExec:
@@ -65,23 +70,9 @@ class UnsetSignatureExec:
         self.code = '-verify'
         self.signed_file = signed_file
         self.unsigned_file = unsigned_file
-        self.exec_unset_signature()
+        self.output = self.exec_unset_signature()
 
     def exec_unset_signature(self):
         unset_obj = FileExec(self.file, self.code, self.signed_file, self.unsigned_file)
-        unset_obj.exec()
-
-
-certificate = r'cert_1.p7b'
-message_to_code = r'test.txt'
-coded_message = r'result.txt'
-message_to_decode = r'to_decode.txt'
-decoded_message = r'decoded.txt'
-container = r'CN=Denis'
-sign_file = r'sign.txt'
-signed_f = r'sign.txt.sig'
-unsigned_f = r'sign_new.txt'
-encr_exec = EncryptExec(certificate, message_to_code, coded_message)
-decr_exec = DecryptExec(container, message_to_decode, decoded_message)
-sign_exec = SetSignatureExec(container, sign_file)
-unsign_exec = UnsetSignatureExec(signed_f, unsigned_f)
+        unset_out = unset_obj.exec()
+        return unset_out
