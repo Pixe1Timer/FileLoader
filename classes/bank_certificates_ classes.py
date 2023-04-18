@@ -14,14 +14,13 @@ class BankCertificateFile(StoredFile):
     def __init__(self, file_path: str, file_name: str):
         super().__init__(file_path, file_name)
 
-    def get_certificate_values(self):
+    def get_certificate_values(self) -> list[str]:
         splited_file_name = self.file_name.split('.')
         self.bank_code = splited_file_name[0]
         self.snils = splited_file_name[1]
         self.date_and_time = datetime.datetime.strptime(splited_file_name[2], '%Y%m%d%H%M%S')
         self.certificate_condition = splited_file_name[3]
-#        print('Код банка: {}\nСНИЛС: {}\nСрок окончания сертификата: {}\nСостояние сертификата: {}'.
-#              format(self.bank_code, self.snils, self.date_and_time, self.certificate_condition))
+        return splited_file_name
 
     def __str__(self):
         super().__str__()
@@ -38,13 +37,13 @@ class BankCertificatesContainer(StoredFileContainer):
     def __init__(self, file_directory: str):
         super().__init__(file_directory)
 
-    def get_available_certificates(self):
+    def get_available_certificates(self) -> list[str]:
         certificates_list = []
         for certificate in self.files_list:
             certificate_name = os.path.basename(certificate.get_full_file_name)
-            certificate_dir = os.path.abspath(certificate.get_full_file_name)
+            certificate_dir = os.path.dirname(certificate.get_full_file_name)
             bcf = BankCertificateFile(certificate_dir, certificate_name)
-            if bcf.get_certificate_values() == 4:
+            if len(bcf.get_certificate_values()) == 4:
                 if bcf.certificate_condition == 'cer':
                     certificates_list.append(certificate.get_full_file_name)
                 else:
