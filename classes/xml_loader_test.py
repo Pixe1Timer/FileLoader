@@ -75,6 +75,9 @@ class XMLFileLoaderTest(unittest.TestCase):
                 self.leaf = dict_content.get('leaf')
                 self.fruit = dict_content.get('fruit')
 
+            def __str__(self):
+                return f'branch: {self.branch}, leaf: {self.leaf}, fruit: {self.fruit}'
+
         class CustomXMLLoader(XMLFileLoader):
             store_class = TestXML
 
