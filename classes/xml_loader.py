@@ -43,5 +43,5 @@ class XMLFileLoader:
             sub_elements = {}
             for key, value in self.xml_content.items():
                 sub_elements[key] = element.find(value).text
-            elements_list.append(sub_elements)
+            elements_list.append(self.store_class(sub_elements) if self.store_class else sub_elements)
         return elements_list

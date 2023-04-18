@@ -87,6 +87,7 @@ class XMLFileLoaderTest(unittest.TestCase):
         loader = CustomXMLLoader(xml_content)
         loader.load(self.store_file_path)
         actual_result = loader.parse()
+        actual_result_str = [str(obj) for obj in actual_result]
         expected_result = [
             {
                 'branch': 'branch1',
@@ -99,5 +100,6 @@ class XMLFileLoaderTest(unittest.TestCase):
                 'fruit': 'fruit2'
             }
         ]
-        self.assertEqual(actual_result, expected_result)
+        expected_result_str = [str(obj) for obj in [TestXML(content) for content in expected_result]]
+        self.assertEqual(actual_result_str, expected_result_str)
         os.remove(self.store_file_path)
