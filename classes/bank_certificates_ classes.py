@@ -30,8 +30,7 @@ class BankCertificateFile(StoredFile):
             try:
                 assert len(self.bank_code) == 4, f'Неверный код банка'
                 assert len(self.snils) == 11, f'Неверный СНИЛС'
-                assert self.certificate_condition == 'cer' \
-                       or self.certificate_condition == 'del', f'Файл не является сертификатом'
+                assert self.certificate_condition in ('cer', 'del'), f'Файл не является сертификатом'
             except AssertionError as a:
                 return False, str(a)
             return True, (
