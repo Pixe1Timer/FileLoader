@@ -8,6 +8,7 @@ class StoredFile:
     Класс, предназначенный для хранения информации
     и статусе файла, включая данные о его блокировке.
     """
+
     def __init__(self, file_path: str, file_name: str):
         """
         Конструктор класса. При создании передаются хранимые атрибуты
@@ -16,6 +17,15 @@ class StoredFile:
         """
         self.file_path = file_path
         self.file_name = file_name
+        self.is_valid, self.error_str = self.check_element_values()
+
+    def check_element_values(self) -> (bool, str):
+        try:
+            assert len(self.file_name) > 0, 'Имя файла не может быть пустым'
+            assert len(self.file_path) > 0, 'Директория файла не может быть пустой'
+        except AssertionError as a:
+            return False, str(a)
+        return True, ''
 
     def __str__(self):
         """
@@ -43,7 +53,7 @@ class StoredFileContainer:
 
     def __init__(self, file_directory: str):
         """
-        Класс конструктор. Заполняет полными директориями фалов
+        Класс конструктор. Заполняет полными директориями файлов
         список для последующего использования класса
         :param str file_directory: путь файла без имени файла
         """
@@ -63,8 +73,3 @@ class StoredFileContainer:
             if not block_files_det_obj.file_is_locked(full_file_directory.get_full_file_name):
                 unlocked_files_list.append(full_file_directory.get_full_file_name)
         return unlocked_files_list
-
-
-sc =StoredFile('/home/ubuntu/Downloads', 'Python install.txt')
-sfc = StoredFileContainer(sc.file_path)
-print(sfc)
