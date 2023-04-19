@@ -17,6 +17,15 @@ class StoredFile:
         """
         self.file_path = file_path
         self.file_name = file_name
+        self.is_valid, self.error_str = self.check_element_values()
+
+    def check_element_values(self) -> (bool, str):
+        try:
+            assert len(self.file_name) > 0, 'Имя файла не может быть пустым'
+            assert len(self.file_path) > 0, 'Директория файла не может быть пустой'
+        except AssertionError as a:
+            return False, str(a)
+        return True, ''
 
     def __str__(self):
         """
@@ -24,7 +33,6 @@ class StoredFile:
         :return: str: полный путь файла
         """
         return self.get_full_file_name
-
 
     @property
     def get_full_file_name(self):
