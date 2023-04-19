@@ -6,10 +6,10 @@ import os
 
 class XMLFileLoaderTest(unittest.TestCase):
     def test_parse_without_store_class(self):
-        temporary_folder = create_temp_dir()
+        no_class_folder = create_temp_dir()
         no_class_file = None
         try:
-            no_class_path = os.path.join(temporary_folder, 'route.xml')
+            no_class_path = os.path.join(no_class_folder, 'route.xml')
             xml_data = '''
                             <chain>
                                 <PATTERNS>pattern1</PATTERNS>
@@ -55,13 +55,13 @@ class XMLFileLoaderTest(unittest.TestCase):
         finally:
             if no_class_file:
                 no_class_file.close()
-            remove_temp_dir(temporary_folder)
+            remove_temp_dir(no_class_folder)
 
     def test_parse_with_store_class(self):
-        temporary_folder = create_temp_dir()
+        stored_class_folder = create_temp_dir()
         stored_class_file = None
         try:
-            stored_class_path = os.path.join(temporary_folder, 'tree.xml')
+            stored_class_path = os.path.join(stored_class_folder, 'tree.xml')
             class_data = '''
                                 <tree>
                                     <BRANCHES>branch1</BRANCHES>
@@ -116,4 +116,4 @@ class XMLFileLoaderTest(unittest.TestCase):
         finally:
             if stored_class_file:
                 stored_class_file.close()
-            remove_temp_dir(temporary_folder)
+            remove_temp_dir(stored_class_folder)
