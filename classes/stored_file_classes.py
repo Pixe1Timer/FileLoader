@@ -51,7 +51,6 @@ class StoredFileContainer:
         """
         self.file_directory = file_directory
         self.files_list = []
-        self.certificates_list = []
         for files_instance in os.listdir(file_directory):
             self.files_list.append(self.path_class(file_directory, files_instance))
 
