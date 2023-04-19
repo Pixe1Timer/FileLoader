@@ -39,9 +39,9 @@ class XMLFileLoader:
         :return: list: возврат обработанных данных файла
         """
         elements_list = []
-        for element in self.xml_data.xpath('/chain'):
+        for element in self.xml_data.xpath('/*/*'):
             sub_elements = {}
-            for key, value in self.xml_content:
-                sub_elements[key] = element.xpath(value).text
+            for key, value in self.xml_content.items():
+                sub_elements[key] = element.find(value).text
             elements_list.append(self.store_class(sub_elements) if self.store_class else sub_elements)
         return elements_list
