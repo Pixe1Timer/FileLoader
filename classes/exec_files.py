@@ -33,7 +33,7 @@ class EncryptExec:
         code: код для выполнения операции шифрования
         param: параметры для выполнения файла
         """
-        self.file = '../cryptcp_exec/cryptcp.exe'
+        self.file = 'cryptcp_exec/cryptcp.exe'
         self.file_with_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), self.file)
         self.code = '-encr'
         self.param = r'-f'
@@ -63,7 +63,7 @@ class DecryptExec:
         code: код для выполнения операции дешифрования
         param: параметры для выполнения файла
         """
-        self.file = '../cryptcp_exec/cryptcp.exe'
+        self.file = 'cryptcp_exec/cryptcp.exe'
         self.file_with_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), self.file)
         self.code = '-decr'
         self.param = '-dn'
@@ -93,7 +93,7 @@ class SetSignatureExec:
         code: код для выполнения операции подписания
         param: параметры для выполнения файла
         """
-        self.file = '../cryptcp_exec/cryptcp.exe'
+        self.file = 'cryptcp_exec/cryptcp.exe'
         self.file_with_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), self.file)
         self.code = '-sign'
         self.param = '-dn'
@@ -121,7 +121,7 @@ class UnsetSignatureExec:
         code: код для выполнения операции снятия подписи
         param: параметры для выполнения файла
         """
-        self.file = '../cryptcp_exec/cryptcp.exe'
+        self.file = 'cryptcp_exec/cryptcp.exe'
         self.file_with_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), self.file)
         self.code = '-verify'
         self.signed_file = signed_file
