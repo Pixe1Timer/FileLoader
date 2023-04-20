@@ -40,4 +40,4 @@ class tempFileCreator:
         self.file.close()
 
     def purge(self):
-        shutil.rmtree(self.dir_full_path)
+        shutil.rmtree(self.dir_full_path) 

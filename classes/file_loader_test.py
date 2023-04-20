@@ -1,5 +1,5 @@
 from file_loader_class import SplitedFileLoader
-from classes.temp_file_creator import tempFileCreator
+from utils.temp_file_creator import tempFileCreator
 import unittest
 
 test_data_sets = [
@@ -44,10 +44,11 @@ class MyTestCase(unittest.TestCase):
 
             result = self.execute_logic(data)
 
-            if expected is not None:
+            if expected:
                 self.assertEqual(result, expected)
             else:
                 self.assertEqual(result, exception)
+
 
     def execute_logic(self, data):
         try:
