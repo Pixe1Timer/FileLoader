@@ -40,4 +40,8 @@ class tempFileCreator:
         self.file.close()
 
     def purge(self):
-        shutil.rmtree(self.dir_full_path) 
+        if os.path.abspath(self.dir_full_path).startswith(os.getcwd()) and self.dir_full_path.startswith(
+                os.path.join(os.getcwd(), "temp")):
+            shutil.rmtree(self.dir_full_path)
+        else:
+            raise ValueError("Trying to delete a non-temporary directory")
