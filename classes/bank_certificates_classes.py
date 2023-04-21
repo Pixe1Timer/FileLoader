@@ -4,6 +4,9 @@ import typing
 
 
 class BankCertificateFile(StoredFile):
+    """
+    Класс, предназанченный для хранения информации о сертификате. Родительский класс StoredFile.
+    """
     bank_code: str
     snils: str
     end_date: datetime.datetime
@@ -11,10 +14,21 @@ class BankCertificateFile(StoredFile):
     is_valid: bool
 
     def __init__(self, file_path: str, file_name: str):
+        """
+        Конструктор класса. При создании передаются хранимые атрибуты.
+        return вызванного метода передается двум атрибутам.
+        :param str file_path: путь файла, без имени файла
+        :param str file_name: имя файла с расширением
+        """
         super().__init__(file_path, file_name)
         self.is_valid, self.error_str = self.certificate_name_parse()
 
     def certificate_name_parse(self) -> (bool, str):
+        """
+        Метод, предназначенный для проверки имени файла на соответсвие, а также
+        передачи в атрибуты нужных параметров.
+        :return: (bool, str): возврат True или False и строки с описанием
+        """
         splited_file_name = self.file_name.split('.')
         if len(splited_file_name) == 4:
             self.bank_code = splited_file_name[0]
@@ -41,10 +55,18 @@ class BankCertificateFile(StoredFile):
 
 
 class BankCertificatesContainer(StoredFileContainer):
+    """
+    Класс, предназначенный для получения списка файлов из папки, а так же
+    создания хранилища сертификатов. Родительский класс StoredFileContainer.
+    """
     path_class: typing.Type[BankCertificateFile]
     path_class = BankCertificateFile
 
     def get_certificates_list(self) -> list[str]:
+        """
+        метод, предназначенный для создания хранилища сертификатов.
+        :return: list[str] certificates_list: список сертификатов
+        """
         certificates_list = []
         for certificate in self.files_list:
             if certificate.is_valid:
