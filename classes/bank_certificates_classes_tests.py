@@ -4,18 +4,16 @@ from classes.bank_certificates_classes import BankCertificatesContainer, BankCer
 from utils.file_utils import create_temp_dir, remove_temp_dir
 
 
-def create_new_file(file_dir, any_file_name):
+def create_new_file(file_dir, any_file_name) -> None:
     """
     Функция, предназначенная для создания нового файла.
     :param str file_dir: путь до файла
     :param str any_file_name: имя файла
-    :return: str full_any_file_dir: полное имя файла
     """
     full_any_file_dir = os.path.join(file_dir, any_file_name)
     any_file = open(full_any_file_dir, mode='w')
     any_file.write('Some comment')
     any_file.close()
-    return full_any_file_dir
 
 
 class TestBankCertificateFile(unittest.TestCase):
