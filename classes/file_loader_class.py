@@ -1,7 +1,10 @@
 import os
+from classes.config_files import BaseItem
 
 
-class SplitedFileLoader:
+class SplittedFileLoader:
+    generated_class = BaseItem
+
     def __init__(self, separator: str, file_path: str):
         self.separator = separator
         self.file_path = os.path.normpath(file_path)
@@ -34,14 +37,11 @@ class SplitedFileLoader:
         else:
             return None
 
-    def filter_data(self, data):
-        def filter_func(x):
-            return x is not None
-
-        filtered_data = filter(filter_func, [self._parsed_line(line) for line in data])
-        return list(filtered_data)
-
     def _parse(self) -> list:
         data = self.load()
-        parsed_data = self.filter_data(data)
+        parsed_data = []
+        for line in data:
+            parsed_value = self._parsed_line(line)
+            if parsed_value:
+                parsed_data.append(parsed_value)
         return parsed_data
