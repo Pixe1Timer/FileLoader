@@ -1,0 +1,97 @@
+#
+#  <USER ID>|<MEMBER ID>|<in process ID>|<out process ID>|<Address>|<Encrypt program ID>|<Key alias>|<Flags>|<User description>
+#
+# Reserved names
+#
+ADMN   |ADMN   |switch |mailout|support.tk@customscard.ru,exploit.tk@customscard.ru,credit.tk@customscard.ru|-|-|-|Administrator
+SYS    |SYS    |switch |mailout|support.tk@customscard.ru,exploit.tk@customscard.ru,credit.tk@customscard.ru|-|-|-|System
+REJ    |REJ    |switch |mailout|support.tk@customscard.ru,exploit.tk@customscard.ru,maslovskaya.elena@customscard.ru,obyxova.inna@customscard.ru,khanzadian.elena@customscard.ru|-|-|-|System
+EXPSUP |EXPSUP |csin   |mailout|support.tk@customscard.ru,exploit.tk@customscard.ru|-|-|-|exp+sup
+CREDIS |CREDIS |csin   |mailout|credit.tk@customscard.ru,support.tk@customscard.ru|-|-|-|credit+Sup
+CREDIT |CREDIT |csin   |mailout|credit.tk@customscard.ru|-|-|-|credit 
+FCER   |FCER   |csin   |mailout|khanzadian.elena@customscard.ru,skripnikova.mariya@customscard.ru,credit.tk@customscard.ru,rashkuev.alexandr@customscard.ru,obyxova.inna@customscard.ru|-|-|-|client 
+FCTR   |FCTR   |csin   |mailout|exploit.tk@customscard.ru,credit.tk@customscard.ru,khanzadian.elena@customscard.ru,obyxova.inna@customscard.ru|-|-|-|CERT 
+MOX    |MOX    |csin   |mailout|maslovskaya.elena@customscard.ru,obyxova.inna@customscard.ru,khanzadian.elena@customscard.ru|-|-|-|Otdel Cards 
+SMLR   |SMLR   |csin   |mailout|smolin.evgeniy@customscard.ru|-	|-|-|reestr from MKS for Smolin
+RIAC   |RIAC   |csin   |mailout|credit.tk@customscard.ru,shoub.julia@customscard.ru|-|-|-|credit.tk+Шуб Юлия  Файл Cверки значений OPA(n)А(n), ARS(n), (K1-0,5)
+CTX    |CTX    |filein |fileout|/usr/local/games/exch/data/ftp/cortex/IN|0|0|-|FTP-обмен с Cortex  файлы для Cortex (директория in)
+RIA    |RIA    |filein |fileout|/usr/local/games/exch/data/ftp/cortex/ria|0|0|-|FTP-обмен файл RIAC из Открытия
+OPS    |OPS    |csin   |fileout|/usr/local/games/exch/data/ftp/cortex/OPS|0|0|-|FTP-exchange Cortex feedsOPS files for Cortex from SBER Security (dir in)
+TRC    |TRC    |csin   |fileout|/usr/local/games/exch/data/ftp/cortex/TRC|0|0|-|FTP-exchange Cortex traces1.txt (dir in)
+SAFE   |SAFE   |csin   |fileout|/usr/local/games/exch/data/safe|0|0|-|директория safe для перехвата файлов 
+PROS   |PROS   |filein |fileout|/usr/local/games/exch/data/pros|0|0|-|директория для файлов в сторону TEST FUSE
+CERT   |CERT   |filein |fileout|/usr/local/games/exch/conf/certificates|0|0|-|CryptoPro CERT (dir in)
+CERTC  |CERTC  |filein |fileout|/usr/local/games/exch/data/emb/certificates|0|0|-|CryptoPro CERT for plastic CARDS (dir in)
+TCTX   |TCTX   |filein |fileout|/usr/local/games/exch/data/emb/CortexTest|0|0|-|файлы из банков на обработку для CORTEX на время тестирования
+CSP    |CSP    |filein |fileout|/usr/local/games/exch/data/csp/in|0|0|-|Crypto обмен (директория in)
+ECHO   |ECHO   |switch |echo   |-|-|-|-|Echo_Process
+NULL   |NULL   |switch |eraser |-|-|-|-|System devnull
+9999   |999    |switch |eraser |-|-|-|-|
+
+SBRDO  | SBRDO |uapin  |mailout|sberbankdo@customscard.ru|-|-|-|Файлы из Сбербанка или CORTEX и на почту СПК (Служба Поддержки Клиентов);
+DMA    | DMA   |uapin  |mailout|sbcollect@customscard.ru|-|-|-|Файлы из Сбербанка или CORTEX и на почту Дмитриева Андрея 
+
+
+SBR    |SBR   |filein |fileout|/usr/local/games/python/tmp/ctx|0|0|-|из Cortex файл SB9 для Сбера
+SBRA   |SBRA  |filein |fileout|/usr/local/games/exch/data/sber_auto/auto_to_sber|0|0|-|файлы для Сбербанка для автоматизации отправки JAVA с подписью 
+SBRM   |SBRM  |filein |fileout|/usr/local/games/exch/data/sber/from_sber|0|0|-|файлы ИЗ Сбербанка (в директорию from_sber) для обработки вручную  
+PARSER |PARSER|filein |fileout|/usr/local/games/exch/data/sber_auto/parser|0|0|-|файлы R_SB1 ИЗ Сбербанка (в директорию parser) для проверки и конвертации python(ом)  
+CTXM   |CTXM  |filein |fileout|/usr/local/games/exch/data/sber/from_ctx|0|0|-|файлы для Сбербанка из CORTEX (в директорию from_ctx)для ручной обработки
+
+#                                                           
+# Banks and TK clients
+0018|888|csin|csout|TESTBANK|CS|BC=0018|-|test bank
+#9999|999|csin|mailout|testbank@customscard.ru|CS|BC=9999|-|bank test
+
+#
+0082|057|csin|csout|CITI|CS|BC=0082|-|CITI bank
+0015|015|csin|mailout|sas-tamcard@primbank.ru|CS|BC=0015|-|PRIMORYE bank
+0017|017|csin|mailout|hq-svc-tk-edo@sovcombank.ru|CS|BC=0017|-|SOVKOM bank
+0027|028|csin|mailout|tkarta@kk.bank|CS|BC=0027|-|KUBAN KREDIT bank
+0033|032|csin|mailout|cards.tk@exibank.ru|CS|BC=0033|-|EXI bank
+0035|034|csin|mailout|tmcard@lanta.ru|CS|BC=0035|-|LANTA bank
+0051|038|csin|mailout|TAMCARD@alfabank.ru|CS|BC=0051|-|ALFA bank
+0055|039|csin|mailout|ROMANOV.SB@VTB.RU|CS|BC=0055|-|VTB bank
+0057|041|csin|mailout|edo_tk@psbank.ru|CS|BC=0057|-|PROMSVZ bank
+0093|064|csin|mailout|tk@slaviabank.ru|CS|BC=0093|-|SLAVIA bank
+0094|065|csin|mailout|Tk20@interbanking.ru|CS|BC=0094|-|MKS bank
+0116|075|csin|mailout|moscow.customscard@db.com|CS|BC=0116|-|DEUT bank
+0149|090|csin|mailout|DBK_support@gazprombank.ru|CS|BC=0149|-|GAZPROM bank
+#0207|119|csin|mailout|tk.csp@siab.ru|CS|BC=0207|-|SIAB bank
+0235|134|csin|mailout|customscard@hsbc.com|CS|BC=0235|-|HSBC bank
+0371|169|csin|mailout|customs-user@mkb.ru|CS|BC=0371|-|MKB bank
+#0372|170|csin|mailout|Plastic@maritimebank.com|CS|BC=0372|-|MORSKOY bank
+0387|178|csin|mailout|customs@open.ru|CS|BC=0387|-|NOMOS bank OPEN
+0394|179|csin|mailout|customscard.moscow@commerzbank.com|CS|BC=0394|-|CMRZBNK
+0433|188|csin|mailout|invocard@raiffeisen.ru|CS|BC=0433|-|RAIFFEISEN bank
+0437|018|csin|mailout|customs@ru.mufg.jp|CS|BC=0437|-|TOKYOMBNK bank 
+0448|192|csin|mailout|crypto-gw@nskbl.ru|CS|BC=0448|-|LEVOBEREZHNY bank
+0528|199|csin|mailout|customs@seb.ru|CS|BC=0528|-|SEB bank
+0572|207|csin|mailout|customscard@mhcb.ru|CS|BC=0572|-|MIDZUHO bank
+0597|211|csin|mailout|clearing@sdm.ru|CS|BC=0597|-|SDM bank
+0601|214|csin|mailout|custom@mti-bank.ru|CS|BC=0601|-|MTI bank
+0604|218|csin|mailout|customscard@rosbank.ru|CS|BC=0604|-|ROSBNK bank 
+0608|222|csin|mailout|customscard@kebrus.ru|CS|BC=0608|-|KEBRUS bank
+0609|223|csin|mailout|tamkarta@aversbank.ru |CS|BC=0609|-|AVERS bank
+0700|224|csin|mailout|custcard@rgs-bank.com|CS|BC=0700|-|RGS bank
+
+#  Банки,с которыми приостановлен электронный документооборот(не перешли на Крипто ПРО),
+#  файлы-отчеты формировать, но в Банки не отправлять. ЛК admin: Active(верх)+; Active(низ1)+  Active(низ2)+
+#  Отправка файлов-отчетов закрыта в СЭДО на уровне маршрутизации eraser
+
+0372|170|csin|eraser|Plastic@maritimebank.com|CS|BC=0372|-|MORSKOY bank
+0207|119|csin|eraser|tk.csp@siab.ru|CS|BC=0207|-|SIAB bank
+
+0065|044|csin|eraser|TRKPB|CS|BC=0065|-|Transkpital
+0081|056|csin|eraser|PROMSERV|CS|BC=0081|-|{romservice
+0121|076|csin|eraser|ABSOLUT|CS|BC=012|-|Абсолют банк Дизертир
+0177|105|csin|eraser|TEMBRBNK|CS|BC0177|-|ТЭМБР-БАНК
+0196|113|csin|eraser|trnsbnk|CS|BC=0196|-|Transstroy
+0239|136|csin|eraser|SMPBNK|CS|BC=0239|-|SMP
+0444|191|csin|eraser|DERZHAVA|CS|BC=0444|-|АКБ Держава ОАО
+0561|205|csin|eraser|ZENIT|CS|BC=0561|-|Банк Зенит (ПАО)
+0598|212|csin|eraser|MORSKOY|CS|BC=0598|-|АО Севастопольский морской банк
+0599|213|csin|eraser|VIKING|CS|BC=0599|-|АО КАБ ВИКИНГ
+0605|219|csin|eraser|EXPOBNK|CS|BC=0605|-|Экспобанк II
+0606|220|csin|eraser|ENERGOTRANSBANK|CS|BC=0606|-|ЭНЕРГОТРАНСБАНК
+
