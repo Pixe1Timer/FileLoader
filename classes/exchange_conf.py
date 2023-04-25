@@ -14,10 +14,4 @@ class ExchangeConf:
             if os.path.exists(spec_path):
                 self.names_confs[key] = spec_path
             else:
-                raise FileNotFoundError(f'Ошибка в классе {__class__.__name__}: не найден файл {key}!')
-
-
-a = ExchangeConf('/home/ubuntu/PycharmProjects/exchange_conf/exp/cnfigs/')
-print(a.names_confs['groups'])
-print(a.names_confs['users'])
-print(a.names_confs['procs'])
+                raise FileNotFoundError(f'Ошибка в классе {__class__.__name__}: не найден файл {spec_path}!')
