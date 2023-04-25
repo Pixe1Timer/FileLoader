@@ -8,8 +8,8 @@ test_data_sets = [
             'Name|Value|546\n',
             'Example1|test|35\n',
             'Example2|test|63\n',
-            #'# Example|test|35\n',
-            #' '
+            '# Example|test|35\n',
+            ' '
         ],
         'expected_result': [
             ['Name', 'Value', '546'],

@@ -3,12 +3,14 @@ from classes.config_files import BaseItem
 
 
 class SplittedFileLoader:
-    generated_class = BaseItem
-
     def __init__(self, separator: str, file_path: str):
         self.separator = separator
         self.file_path = os.path.normpath(file_path)
+        self.generated_class = None
         self.parsed_data = self._parse()
+
+    def set_generated_class(self, generated_class):
+        self.generated_class = generated_class
 
     def load(self) -> list:
         expected_length = None
@@ -42,6 +44,6 @@ class SplittedFileLoader:
         parsed_data = []
         for line in data:
             parsed_value = self._parsed_line(line)
-            if parsed_value:
-                parsed_data.append(parsed_value)
+            parsed_value = self.generated_class(*parsed_value) if self.generated_class else parsed_value
+            parsed_data.append(parsed_value) if parsed_value else None
         return parsed_data
