@@ -10,8 +10,8 @@ class tempFileCreator:
         """Конструктор класса tempFileCreator.
 
         Аргументы:
-        file_content -- список строк, содержащих данные для файла.
-        file_path -- путь к файлу.
+        file_content -- список строк, содержащих данные для файла
+        file_path -- путь к файлу
 
         """
         dirname, filename = self.extract_dirname_filename(file_path)

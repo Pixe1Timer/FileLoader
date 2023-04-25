@@ -64,7 +64,7 @@ class SplittedFileLoader:
 
         line(str): строка, которую нужно обработать
 
-        return: список параметров, если строка валидна, иначе None
+        return: возвращает список параметров, если строка валидна, иначе None
         """
         line = line.replace('\t', '').strip()
         if line and not line.startswith('#'):
