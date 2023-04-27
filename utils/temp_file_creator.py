@@ -19,10 +19,10 @@ class tempFileCreator:
         self.dirname = dirname
         self.filename = filename
         self.dir_full_path = self.create_temp_dir(self.dirname)
-        self.file = self.create_temp_file(self.filename)
+        self.file_obj = self.create_temp_file(self.filename)
         self.fill_temp_file_with_data()
 
-    def extract_dirname_filename(self, path: str) -> (str, str):
+    def extract_dirname_filename(self, path_str: str) -> (str, str):
         """Метод extract_dirname_filename получает путь к файлу и разделяет его на путь до директории
         и имя файла.
 
@@ -32,9 +32,10 @@ class tempFileCreator:
         Возвращает пару значений: имя директории и имя файла.
 
         """
-        dir_and_file_arr = path.split('/')
-        dirname = dir_and_file_arr[0]
-        filename = dir_and_file_arr[1]
+        normalize_path = os.path.normpath(path_str)
+        filename = os.path.basename(normalize_path)
+        dirname = os.path.dirname(normalize_path)
+    
         return dirname, filename
 
     def create_temp_dir(self, dirname: str = "temp") -> str:
@@ -72,8 +73,8 @@ class tempFileCreator:
 
     def fill_temp_file_with_data(self):
         """Метод fill_temp_file_with_data записывает данные из атрибута self.test_data в созданный временный файл."""
-        self.file.write(self.test_data)
-        self.file.close()
+        self.file_obj.write(self.test_data)
+        self.file_obj.close()
 
     def purge(self):
         """Метод purge удаляет созданную временную директорию с файлами.
@@ -82,8 +83,4 @@ class tempFileCreator:
         плюс поддиректория temp.
 
         """
-        if os.path.abspath(self.dir_full_path).startswith(os.getcwd()) and self.dir_full_path.startswith(
-                os.path.join(os.getcwd(), "temp")):
-            shutil.rmtree(self.dir_full_path)
-        else:
-            raise ValueError("Trying to delete a non-temporary directory")
+        remove_temp_dir(self.dir_full_path)
